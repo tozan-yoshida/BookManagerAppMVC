@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BookManagerAppMVC.Models.Book>
+
+@{
+    ViewData["Title"] = "FindBooks";
+}
+
+<h1>図書検索</h1>
+
+<h4>登録済みの図書を検索できます。</h4>
+<hr />
+
+<form asp-action="FindBooks">
+    <div class="row">
+        <p>
+            <label class="label01">書籍名</label>
+            <input type="text" name="title" class="col-10 form-control" />
+        </p>
+        <p>
+            <label class="label01">著者</label>
+            <input type="text" name="author" class="col-10 form-control" />
+        </p>
+        <p>
+            <label class="label01">出版社</label>
+            <input type="text" name="publisher" class="col-10 form-control" />
+        </p>
+        <input type="submit" value="FindBooks" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="center">編集</th>
+            <th class="center">削除</th>
+            <th>書籍名</th>
+            <th>著者</th>
+            <th>出版社</th>
+            <th>登録日時</th>
+            <th>登録ユーザー</th>
+            <th>更新日時</th>
+            <th>更新ユーザー</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-primary">編集</a>
+                </td>
+                <td class="center">
+                    <button type="button" class="btn btn-primary" >削除</button>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.BookId">@item.Title</a>
+                </td>
+                <td>
+                    @item.Author
+                </td>
+                <td>
+                    @item.Publisher
+                </td>
+                <td>
+                    @item.RegistDate
+                </td>
+                <td>
+                    @item.RegistUser
+                </td>
+                <td>
+                    @item.UpdateDate
+                </td>
+                <td>
+                    @item.UpdateUser
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
