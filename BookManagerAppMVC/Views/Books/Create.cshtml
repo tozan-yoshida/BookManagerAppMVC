@@ -9,32 +9,33 @@
 <h4>新しく本を登録します</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label">書籍名</label>
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="col-form-label col-sm-2">書籍名</label>
+                <div class="col-sm-5">
                 <input asp-for="Title" class="form-control" />
+                </div>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label">著者</label>
-                <input asp-for="Author" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="Author" class="control-label col-sm-2">著者</label>
+                <div class="col-sm-5">
+                    <input asp-for="Author" class="form-control" />
+                </div>
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Publisher" class="control-label">出版社</label>
-                <input asp-for="Publisher" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="Publisher" class="control-label col-sm-2">出版社</label>
+                <div class="col-sm-5">
+                    <input asp-for="Publisher" class="form-control" />
+                </div>
                 <span asp-validation-for="Publisher" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mb-3">
+                <input type="submit" value="登録" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

@@ -1,3 +1,16 @@
+/* || システム全体の配色 */
+/*:root {*/
+    /* メインカラー */
+    /*--base-color-main: rgb(0, 30, 100);
+    --rgb-base-color-main: 0, 30, 100;*/
+    /* アクセントカラー(ボタン等) */
+    /*--base-color-accent: rgb(196, 0, 11);
+    --rgb-base-color-accent: 196, 0, 11;*/
+    /* 背景カラー */
+    /*--base-color-bg: rgba(var(--rgb-base-color-main), 0.3);
+}*/
+
+ /*|| システム全体のレイアウト*/ 
 html {
   font-size: 14px;
 }
@@ -8,10 +21,6 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -19,4 +28,205 @@ html {
 
 body {
   margin-bottom: 60px;
+  margin-left: 10px;
+}
+
+.btn-disable {
+    cursor: not-allowed;
+    pointer-events: none;
+    Button disabled - CSS color class
+    opacity: 0.5;
+    width: 117px !important;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+.cw-250{
+    width: 250px;
+}
+
+#main-icon {
+    max-width: 50px;
+    max-height: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    object-fit: cover;
+    border: solid #ffffff;
+}
+
+/*.topbar {
+    height: 3.8rem;
+}
+*/
+.sidebar {
+    background-color: darkblue;
+    width: 150px;
+    height: 1000px;
+    color: white;
+}
+.color-white{
+    color: white;
+    text-align:center;
+}
+
+.migiyose{
+    text-align: right;
+}
+/*
+#myTable{
+    width: 100% !important;
+}
+
+#myTableShippingPlanInquiry {
+    width: 100% !important;
+}
+
+#myTable table {
+    overflow: auto;
+    table-layout: fixed
+}
+
+table.dataTable.compact thead tr {
+    padding: 0.75rem !important;
+}
+table.dataTable.compact thead td,
+table.dataTable.compact tfoot th,
+table.dataTable.compact tfoot td,
+table.dataTable.compact tbody th,
+table.dataTable.compact tbody td {
+    padding: 0.75rem !important;
+}
+
+.navbar {
+    z-index: 9999 !important;
+    position: fixed !important;
+}
+
+.container-fluid {
+    padding-top: 6rem;
+    padding-left: 15rem;
+    position: fixed !important;
+    z-index: 0;
+    overflow: scroll;
+    height: 100vh;
+}
+
+footer {
+    text-align: center;
+    background-color: #fff;
+    width: 100%;
+    z-index: 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+}
+
+.modal {
+    z-index: 9999999 !important;
+}
+*/
+/*.dropdown-item.logout {
+    padding-top: 0.8rem;*/
+    /*padding-bottom: 0.6rem;
+}
+
+.sidebar-brand{
+    transition: 0.25s;
+}
+
+.sidebar-brand:hover {
+    transform: scale(1.05);
+}
+
+.nav-link.collapsed {
+    transition: 0.25s;
+}
+.nav-link.collapsed:hover {
+    transform: scale(1.04);
+}
+
+
+#user-detail-dropdown-item:hover,
+#user-detail-dropdown-item:focus {
+    background-color: #fff !important;
+}
+
+#user-detail-dropdown-item.active,
+#user-detail-dropdown-item:active {
+    color: #858796 !important;
+    background-color: #fff !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #858796;
+}
+
+.message-area {
+    background-color: #ff9;
+    text-shadow: 1px 1px 2px #fff;
+    margin-bottom: 0.5rem;
+}
+
+.valid-area {
+    margin-bottom: 0.5rem;
+}
+
+.input-password .fas {
+    position: absolute;
+    bottom: 21px;
+    right: 10px;
+}
+
+.input-password .fa-eye:before {
+    content: "\f06e";
+    font-size: 15px;
+}
+
+#myTableShippingImportError_wrapper .dataTables_scrollHeadInner,
+#myTableShippingImportError_wrapper .dataTables_scrollBody,
+#myTableShippingImportError_wrapper .table
+{
+    width: 100% !important;
+}*/
+
+
+    /*}*/
+
+    /* テキストカラー */
+    /*body,
+    .form-control {
+        color: #3a3b45;
+    }
+
+    table,
+    table th {
+        color: #3a3b45 !important;
+        font-weight: 400 !important;
+    }
+
+        table th {
+            text-align: center;
+            white-space: nowrap;
+        }
+
+    .table-bordered {
+        border: none;
+    }*/
+
+article {
+    display: flex; /*サイドバーとメインコンテンツを横並びにする                指定をした*/
+}
+
+header div:first-child{
+    margin-right:auto;
+}
+header
+.header-name{
+    position: absolute;
+    right: 110px;
 }

@@ -72,7 +72,7 @@ namespace BookManagerAppMVC.Controllers
 
                 _context.Add(book);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(FindBooks));
             }
             return View(book);
         }
@@ -128,7 +128,7 @@ namespace BookManagerAppMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(FindBooks));
             }
             return View(book);
         }
@@ -165,7 +165,7 @@ namespace BookManagerAppMVC.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(FindBooks));
         }
 
         private bool BookExists(int id)
@@ -174,18 +174,32 @@ namespace BookManagerAppMVC.Controllers
         }
 
         [Authorize]
+        public async Task<IActionResult> FindBooks()
+        {
+            var books = await _context.Book.ToListAsync(); 
+            return View(books);
+        }
+
+        [Authorize]
+        [HttpPost]
         public async Task<IActionResult> FindBooks(string title, string author, string publisher)
         {
             var books = new List<Book>();
             if (title.IsNullOrEmpty() && author.IsNullOrEmpty() && publisher.IsNullOrEmpty())
             {
                 books = await _context.Book.ToListAsync();
-                return View(books);
+                return Json(books);
             }
             books = await _context.Book.Where(m => (m.Title!.Contains(title!) || title.IsNullOrEmpty())
                                                     && (m.Author!.Contains(author!) || author.IsNullOrEmpty())
                                                     && (m.Publisher!.Contains(publisher!) || publisher.IsNullOrEmpty())).ToListAsync();
-            return View(books);
+            return Json(books);
+        }
+
+        public async Task<ActionResult> ShowModal(int id)
+        {
+            var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
+            return PartialView("Delete", book);
         }
     }
 }

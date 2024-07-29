@@ -57,7 +57,7 @@ namespace BookManagerAppMVC.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity)
                     );
-                    return RedirectToAction("FindBooks", "Books");
+                    return RedirectToAction("Index", "Books");
                 }
                 else
                 {
