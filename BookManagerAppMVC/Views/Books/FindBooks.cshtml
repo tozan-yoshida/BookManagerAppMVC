@@ -9,23 +9,27 @@
 <h4>登録済みの図書を検索できます。</h4>
 <hr />
 
-<form asp-action="FindBooks">
     <div class="row">
-        <p>
-            <label class="label01">書籍名</label>
-            <input type="text" name="title" class="col-10 form-control" />
-        </p>
-        <p>
-            <label class="label01">著者</label>
-            <input type="text" name="author" class="col-10 form-control" />
-        </p>
-        <p>
-            <label class="label01">出版社</label>
-            <input type="text" name="publisher" class="col-10 form-control" />
-        </p>
-        <input type="submit" value="FindBooks" class="btn btn-primary" />
+        <div class="row mb-3">
+            <label class="label01 col-sm-1 col-form-label">書籍名</label>
+            <div class="col-sm-3">
+            <input type="text" name="title" class="form-control" id="title"/>
+            </div>
+        </div>
+        <div class="row mb-3">
+           <label class="label01 col-sm-1 col-form-label">著者</label>
+           <div class="col-sm-3">
+                <input type="text" name="author" class="form-control" id="author"/>
+           </div>
+        </div>
+        <div class="row mb-3">
+            <label class="label01 col-sm-1 col-form-label">出版社</label>
+            <div class="col-sm-3">
+                <input type="text" name="publisher" class="form-control" id="publisher"/>
+            </div>
+            <button  value="検索" class="btn btn-primary col-sm-1" id="findButton">検索</button>
+        </div>
     </div>
-</form>
 
 <table class="table">
     <thead>
@@ -42,7 +46,7 @@
 
         </tr>
     </thead>
-    <tbody>
+    <tbody id="find-table">
         @foreach (var item in Model)
         {
             <tr>
@@ -50,7 +54,7 @@
                     <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-primary">編集</a>
                 </td>
                 <td class="center">
-                    <button type="button" class="btn btn-primary" >削除</button>
+                    <button type="button" class="btn btn-danger button_for_openmodal" data-id="@item.BookId" data-url="@Url.Action("ShowModal")">削除</button>
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.BookId">@item.Title</a>
@@ -77,5 +81,9 @@
         }
     </tbody>
 </table>
+
+<div id="ModalHere">
+
+</div>
 
 
