@@ -15,5 +15,6 @@ namespace BookManagerAppMVC.Data
         }
 
         public DbSet<BookManagerAppMVC.Models.Book> Book { get; set; } = default!;
+        public DbSet<BookManagerAppMVC.Models.RentalHistory> RentalHistory { get; set; } = default!;
     }
 }
