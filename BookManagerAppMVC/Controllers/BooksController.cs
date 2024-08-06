@@ -69,6 +69,8 @@ namespace BookManagerAppMVC.Controllers
 
                 book.RegistDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
                 book.RegistUser = userName;
+                book.UpdateDate = "";
+                book.UpdateUser = "";
 
                 _context.Add(book);
                 await _context.SaveChangesAsync();

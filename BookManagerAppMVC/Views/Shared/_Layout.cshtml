@@ -71,8 +71,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        $(document).ready(function () {
-            $('.button_for_openmodal').click(function () {
+        function deleteBooks() {
+            $(document).on('click', '.button_for_openmodal', function () {
                 var url = $(this).data('url');
                 var id = $(this).attr('data-id');
                 $.ajax({
@@ -91,75 +91,78 @@
                         console.log(xhr, msg);
                     });
             });
-        });
-
+        }
 
         </script>
     <script>
-        
-        $("#findButton").on("click", function () {
+        $(document).ready(function () {
 
-            var title = $("#title").val();
-            var author = $("#author").val();
-            var publisher = $("#publisher").val();
-            var url = $(this).data('url');
+            deleteBooks();
+            $("#findButton").on("click", function () {
 
-            var data = {};
-            data.title = title;
-            data.author = author;
-            data.publisher = publisher;
+                var title = $("#title").val();
+                var author = $("#author").val();
+                var publisher = $("#publisher").val();
+                var url = $(this).data('url');
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                dataType: 'json'
-            })
-                .done(function (books) {
-                    console.log(books);
-                    const len = books.length;
-                    let html = ``;
-                    for (let i = 0; i < len; i++) {
-                        html += `<tr>
-                                    <td class="center">
-                                        <a asp-action="Edit" asp-route-id="${books[i].bookId}" class="btn btn-primary">編集</a>
-                                    </td>
-                                    <td class="center">
-                                        <button type="button" class="btn btn-danger button_for_openmodal" data-id="${books[i].bookId}" data-url="@Url.Action("ShowModal")">削除</button>
-                                    </td>
-                                    <td>
-                                        <a asp-action="Details" asp-route-id="${books[i].bookId}">${books[i].title}</a>
-                                    </td>
-                                    <td>
-                                        ${books[i].author}
-                                    </td>
-                                    <td>
-                                        ${books[i].publisher}
-                                    </td>
-                                    <td>
-                                        ${books[i].registDate}
-                                    </td>
-                                    <td>
-                                        ${books[i].registUser}
-                                    </td>
-                                    <td>
-                                        ${books[i].updateDate}
-                                    </td>
-                                    <td>
-                                        ${books[i].updateUser}
-                                    </td>
-                                </tr>
-                                        `;
-                    }
-                    console.log(html);
-                    $("#find-table").empty().append(html);
+                var data = {};
+                data.title = title;
+                data.author = author;
+                data.publisher = publisher;
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json'
                 })
-                .fail(function (table) {
-                    console.log(data);
-                    console.log(table);
-                    console.log("error");
-                });
+                    .done(function (books) {
+                        console.log(books);
+                        const len = books.length;
+                        let html = ``;
+                        for (let i = 0; i < len; i++) {
+                            html += `<tr>
+                                                        <td class="center">
+                                                            <a href="/Books/Edit/${books[i].bookId}" class="btn btn-primary">編集</a>
+                                                        </td>
+                                                        <td class="center">
+                                                            <button type="button" class="btn btn-danger button_for_openmodal" data-id="${books[i].bookId}" data-url="@Url.Action("ShowModal")">削除</button>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/Books/Details/${books[i].bookId}">${books[i].title}</a>
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].author}
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].publisher}
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].registDate}
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].registUser}
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].updateDate}
+                                                        </td>
+                                                        <td>
+                                                            ${books[i].updateUser}
+                                                        </td>
+                                                    </tr>
+                                                            `;
+                        }
+                        console.log(html);
+                        $("#find-table").empty().append(html);
+                    })
+                    .fail(function (table) {
+                        console.log(data);
+                        console.log(table);
+                        console.log("error");
+                    });
+            });
         });
+   
         function FindBooks() {
         }
 
