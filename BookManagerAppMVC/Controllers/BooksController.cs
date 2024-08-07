@@ -67,9 +67,8 @@ namespace BookManagerAppMVC.Controllers
             {
                 string userName = HttpContext.User.Identity!.Name!;
 
-                book.RegistDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+                book.RegistDate = DateTime.Now;
                 book.RegistUser = userName;
-                book.UpdateDate = "";
                 book.UpdateUser = "";
 
                 _context.Add(book);
@@ -114,7 +113,7 @@ namespace BookManagerAppMVC.Controllers
                 try
                 {
                     string userName = HttpContext.User.Identity!.Name!;
-                    book.UpdateDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+                    book.UpdateDate = DateTime.Now;
                     book.UpdateUser = userName;
                     _context.Update(book);
                     await _context.SaveChangesAsync();

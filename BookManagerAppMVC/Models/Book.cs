@@ -12,11 +12,11 @@ namespace BookManagerAppMVC.Models
         [Required(ErrorMessage = "出版社を入力してください")]
         public string? Publisher { get; set; }
 
-        public string? RegistDate { get; set; }
+        public DateTime RegistDate { get; set; }
 
         public string? RegistUser { get; set; }
 
-        public string? UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
         public string? UpdateUser { get; set; }
 

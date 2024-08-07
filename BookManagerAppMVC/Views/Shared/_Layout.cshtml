@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -121,6 +121,31 @@
                         const len = books.length;
                         let html = ``;
                         for (let i = 0; i < len; i++) {
+                            let registDate = new Date(books[i].registDate).toLocaleString(
+                                undefined,
+                                {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                }
+                            );
+                            let updateDate = "";
+                            if(books[i].updateDate != null){
+                                updateDate = new Date(books[i].updateDate).toLocaleString(
+                                    undefined,
+                                    {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                    }
+                                );
+                            }
                             html += `<tr>
                                                         <td class="center">
                                                             <a href="/Books/Edit/${books[i].bookId}" class="btn btn-primary">編集</a>
@@ -138,19 +163,20 @@
                                                             ${books[i].publisher}
                                                         </td>
                                                         <td>
-                                                            ${books[i].registDate}
+                                                            ${registDate}
                                                         </td>
                                                         <td>
                                                             ${books[i].registUser}
                                                         </td>
                                                         <td>
-                                                            ${books[i].updateDate}
+                                                            ${updateDate}
                                                         </td>
                                                         <td>
                                                             ${books[i].updateUser}
                                                         </td>
                                                     </tr>
                                                             `;
+                            console.log(registDate);
                         }
                         console.log(html);
                         $("#find-table").empty().append(html);
