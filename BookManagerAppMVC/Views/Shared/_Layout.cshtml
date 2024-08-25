@@ -17,8 +17,12 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">図書管理アプリ</a>
                 
-                <div class="header-name">@Context.User.Identity.Name</div>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                <div class="item_hover">
+                    <a class="navbar-brand" asp-area="">@Context.User.Identity.Name <img src="~/images/user_icon.png" alt="ユーザーアイコン" height="30" width="30" /></a>
+                    <ul class="dropdown_lists">
+                        <li class="dropdown_list"><a asp-area="" asp-controller="Home" asp-action="Logout">ログアウト</a></li>
+                    </ul>
+                </div>
                 
             </div>
         </nav>
