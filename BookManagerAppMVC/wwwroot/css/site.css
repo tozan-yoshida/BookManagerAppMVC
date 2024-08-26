@@ -75,6 +75,15 @@ input::-ms-clear {
 .migiyose{
     text-align: right;
 }
+
+.dropdown_lists{
+    display: none;
+    width: 100%;
+}
+
+.item_hover:hover .dropdown_lists{
+    display: block;
+}
 /*
 #myTable{
     width: 100% !important;
