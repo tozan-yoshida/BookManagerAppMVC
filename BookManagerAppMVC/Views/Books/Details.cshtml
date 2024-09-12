@@ -54,6 +54,34 @@
         </dd>
     </dl>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                日時
+            </th>
+            <th>
+                所在
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var histories in ViewBag.RentalHistories)
+        {
+            <tr>
+                <td>
+                    @histories.RentDate
+                </td>
+                <td>
+                    @histories.RentUser
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+
+</script>
 <div>
     <a asp-action="FindBooks" type="btn btn-primary">Back to List</a>
 </div>

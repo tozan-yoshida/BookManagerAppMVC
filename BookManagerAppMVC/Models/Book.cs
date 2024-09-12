@@ -20,8 +20,6 @@ namespace BookManagerAppMVC.Models
 
         public string? UpdateUser { get; set; }
 
-        //public int RentalHistoryId {get; set; }
-
-        //public ICollection<RentalHistory> RentalHistorys { get; set; }
+        //public ICollection<RentalHistory>? RentalHistories { get; set; }
     }
 }

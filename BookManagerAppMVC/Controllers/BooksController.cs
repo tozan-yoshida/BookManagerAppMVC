@@ -38,8 +38,9 @@ namespace BookManagerAppMVC.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.BookId == id);
+            var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
+            var rentalHistories = _context.RentalHistory.Where(x => x.BookId == id);
+            ViewBag.RentalHistories = rentalHistories;
             if (book == null)
             {
                 return NotFound();
@@ -88,6 +89,8 @@ namespace BookManagerAppMVC.Controllers
             }
 
             var book = await _context.Book.FindAsync(id);
+            
+
             if (book == null)
             {
                 return NotFound();

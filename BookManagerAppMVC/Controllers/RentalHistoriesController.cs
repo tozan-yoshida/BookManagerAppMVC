@@ -46,6 +46,7 @@ namespace BookManagerAppMVC.Controllers
         // GET: RentalHistories/Create
         public IActionResult Create()
         {
+            ViewBag.BookId = new SelectList(_context.Book, "BookId", "Title");
             return View();
         }
 
@@ -54,14 +55,20 @@ namespace BookManagerAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RentalHistoryId,RentDate,RentUser")] RentalHistory rentalHistory)
+        public async Task<IActionResult> Create([Bind("RentalHistoryId,BookId")] RentalHistory rentalHistory)
         {
+            
             if (ModelState.IsValid)
             {
+                string userName = HttpContext.User.Identity!.Name!;
+
+                rentalHistory.RentDate = DateTime.Now;
+                rentalHistory.RentUser = userName;
                 _context.Add(rentalHistory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.BookId = new SelectList(_context.Book, "BookId", "Title");
             return View(rentalHistory);
         }
 
