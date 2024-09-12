@@ -72,6 +72,24 @@ namespace BookManagerAppMVC.Controllers
             return View(rentalHistory);
         }
 
+        /// <summary>
+        /// 図書情報を作成したときの初期状態を登録する
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> CreateByBooksController()
+        {
+            int bookId = (int)TempData["Book"]!;
+            var rentalHistory = new RentalHistory();
+
+            rentalHistory.RentDate = DateTime.Now;
+            rentalHistory.RentUser = "本棚";
+            rentalHistory.BookId = bookId;
+            _context.Add(rentalHistory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("FindBooks","Books");
+        }
+
         // GET: RentalHistories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

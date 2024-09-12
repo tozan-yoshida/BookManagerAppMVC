@@ -74,7 +74,8 @@ namespace BookManagerAppMVC.Controllers
 
                 _context.Add(book);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(FindBooks));
+                TempData["Book"] = book.BookId;
+                return RedirectToAction("CreateByBooksController", "RentalHistories");
             }
             return View(book);
         }
