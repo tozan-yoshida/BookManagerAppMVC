@@ -151,34 +151,37 @@
                                 );
                             }
                             html += `<tr>
-                                                        <td class="center">
-                                                            <a href="book-manager-app/Books/Edit/${books[i].bookId}" class="btn btn-primary">編集</a>
-                                                        </td>
-                                                        <td class="center">
-                                                            <button type="button" class="btn btn-danger button_for_openmodal" data-id="${books[i].bookId}" data-url="@Url.Action("ShowModal")">削除</button>
-                                                        </td>
-                                                        <td>
-                                                            <a href="book-manager-app/Books/Details/${books[i].bookId}">${books[i].title}</a>
-                                                        </td>
-                                                        <td>
-                                                            ${books[i].author}
-                                                        </td>
-                                                        <td>
-                                                            ${books[i].publisher}
-                                                        </td>
-                                                        <td>
-                                                            ${registDate}
-                                                        </td>
-                                                        <td>
-                                                            ${books[i].registUser}
-                                                        </td>
-                                                        <td>
-                                                            ${updateDate}
-                                                        </td>
-                                                        <td>
-                                                            ${books[i].updateUser}
-                                                        </td>
-                                                    </tr>
+                                        <td class="center">
+                                            <a href="book-manager-app/Books/Edit/${books[i].bookId}" class="btn btn-primary">編集</a>
+                                        </td>
+                                        <td class="center">
+                                            <button type="button" class="btn btn-danger button_for_openmodal" data-id="${books[i].bookId}" data-url="@Url.Action("ShowModal")">削除</button>
+                                        </td>
+                                        <td>
+                                            <a href="book-manager-app/Books/Details/${books[i].bookId}">${books[i].title}</a>
+                                        </td>
+                                        <td>
+                                            ${books[i].author}
+                                        </td>
+                                        <td>
+                                            ${books[i].publisher}
+                                        </td>
+                                        <td>
+                                            ${books[i].registUser}
+                                        </td>
+                                        <td>
+                                            ${registDate}
+                                        </td>
+                                        <td>
+                                            ${books[i].possetion}
+                                        </td>
+                                        <td>
+                                            ${books[i].updateUser}
+                                        </td>
+                                        <td>
+                                            ${updateDate}
+                                        </td>
+                                    </tr>
                                                             `;
                             console.log(registDate);
                         }

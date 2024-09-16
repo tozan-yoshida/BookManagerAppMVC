@@ -35,7 +35,8 @@ namespace BookManagerAppMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                if (TempData["BookId"] != null) id = (int?)TempData["BookId"];
+                else return NotFound();
             }
 
             var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
@@ -70,6 +71,7 @@ namespace BookManagerAppMVC.Controllers
 
                 book.RegistDate = DateTime.Now;
                 book.RegistUser = userName;
+                book.Possetion = "本棚";
                 book.UpdateUser = "";
 
                 _context.Add(book);
@@ -119,6 +121,8 @@ namespace BookManagerAppMVC.Controllers
                     string userName = HttpContext.User.Identity!.Name!;
                     book.UpdateDate = DateTime.Now;
                     book.UpdateUser = userName;
+                    // 暫定処理
+                    book.Possetion = "本棚";
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
@@ -205,6 +209,52 @@ namespace BookManagerAppMVC.Controllers
         {
             var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
             return PartialView("Delete", book);
+        }
+
+        /// <summary>
+        /// 図書を借りるときの処理
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RentBook(int id)
+        {
+            var book = await _context.Book.FindAsync(id);
+            if (!book.Possetion.Equals("本棚"))
+            {
+                return RedirectToAction(nameof(Details));
+            }
+            string rentUser = HttpContext.User.Identity!.Name!;
+            book.Possetion = rentUser;
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            TempData["BookId"] = id;
+            TempData["Possetion"] = rentUser;
+            return RedirectToAction("RentByBooksController", "RentalHistories");
+        }
+
+        /// <summary>
+        /// 図書を返却するときの処理
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ReturnBook(int id)
+        {
+            var book = await _context.Book.FindAsync(id);
+            if (book.Possetion.Equals("本棚"))
+            {
+                return RedirectToAction(nameof(Details));
+            }
+            book.Possetion = "本棚";
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            TempData["BookId"] = id;
+            TempData["Possetion"] = "本棚";
+            return RedirectToAction("RentByBooksController", "RentalHistories");
+        }
+
+        private bool IsRented(int id)
+        {
+            return true;
         }
     }
 }

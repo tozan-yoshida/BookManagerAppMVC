@@ -63,7 +63,7 @@ namespace BookManagerAppMVC.Controllers
                 string userName = HttpContext.User.Identity!.Name!;
 
                 rentalHistory.RentDate = DateTime.Now;
-                rentalHistory.RentUser = userName;
+                rentalHistory.Possetion = userName;
                 _context.Add(rentalHistory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -83,11 +83,30 @@ namespace BookManagerAppMVC.Controllers
             var rentalHistory = new RentalHistory();
 
             rentalHistory.RentDate = DateTime.Now;
-            rentalHistory.RentUser = "本棚";
+            rentalHistory.Possetion = "本棚";
             rentalHistory.BookId = bookId;
             _context.Add(rentalHistory);
             await _context.SaveChangesAsync();
             return RedirectToAction("FindBooks","Books");
+        }
+
+        /// <summary>
+        /// 図書を借りるときの情報を登録する処理
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> RentByBooksController()
+        {
+            int bookId = (int)TempData["BookId"]!;
+            string userName = (string)TempData["Possetion"]!;
+            var rentalHistory = new RentalHistory();
+
+            rentalHistory.RentDate = DateTime.Now;
+            rentalHistory.Possetion = userName;
+            rentalHistory.BookId = bookId;
+            _context.Add(rentalHistory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Books");
+
         }
 
         // GET: RentalHistories/Edit/5

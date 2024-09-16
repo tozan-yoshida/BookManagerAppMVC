@@ -7,7 +7,7 @@
 <h1>図書詳細</h1>
 
 <div>
-    <h4>登録図書の詳細を確認できます</h4>
+    <h4>登録図書の詳細を確認・図書を借りることができます。所在履歴は直近10回分が確認できます。</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2 mb-3">
@@ -29,16 +29,28 @@
             @Html.DisplayFor(model => model.Publisher)
         </dd>
         <dt class="col-sm-2 mb-3">
-            登録日時
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RegistDate)
-        </dd>
-        <dt class="col-sm-2 mb-3">
             登録ユーザー
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RegistUser)
+        </dd>
+        <dt class="col-sm-2 mb-3">
+            登録日時
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegistDate)
+        </dd>
+        <dt class="col-sm-2 mb-3">
+            所在
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Possetion)
+        </dd>
+        <dt class="col-sm-2 mb-3">
+            更新ユーザー
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdateUser)
         </dd>
         <dt class = "col-sm-2 mb-3">
             更新日時
@@ -46,14 +58,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UpdateDate)
         </dd>
-        <dt class = "col-sm-2 mb-3">
-            更新ユーザー
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdateUser)
-        </dd>
     </dl>
 </div>
+<button type="button" class="btn btn-primary button_for_openmodal" data-id="@Model.BookId" data-url="@Url.Action("RentBook")" id="rentButton">借りる</button>
+<button type="button" class="btn btn-primary button_for_openmodal" data-id="@Model.BookId" data-url="@Url.Action("ReturnBook")" id="rentButton">返す</button>
+
+<script>
+
+</script>
 <table class="table">
     <thead>
         <tr>
@@ -70,18 +82,15 @@
         {
             <tr>
                 <td>
-                    @histories.RentDate
+                    @histories.RentDate.ToString("yyyy/MM/dd HH:mm:ss")
                 </td>
                 <td>
-                    @histories.RentUser
+                    @histories.Possetion
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<script>
-
-</script>
 <div>
     <a asp-action="FindBooks" type="btn btn-primary">Back to List</a>
 </div>

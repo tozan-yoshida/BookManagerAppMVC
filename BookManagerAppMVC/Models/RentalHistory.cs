@@ -6,7 +6,7 @@ namespace BookManagerAppMVC.Models
     {
         public int RentalHistoryId { get; set; }
         public DateTime RentDate {  get; set; }
-        public string? RentUser {  get; set; }
+        public string? Possetion {  get; set; }
 
         public int BookId {  get; set; }
         //public Book? Book { get; set; }
