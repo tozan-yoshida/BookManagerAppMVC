@@ -1,0 +1,42 @@
+﻿@model BookManagerAppMVC.Models.Book
+
+@{
+    ViewData["Title"] = "図書返却";
+}
+<h1>図書返却</h1>
+
+<div>
+    <h4>借りている本を返却します。</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2 mb-3">
+            書籍名
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2 mb-3">
+            著者
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        <dt class="col-sm-2 mb-3">
+            出版社
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Publisher)
+        </dd>
+
+        <dt class="col-sm-2 mb-3">
+            借りた日
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.RentDate
+        </dd>
+    </dl>
+</div>
+
+<button type="button" class="btn btn-primary button_for_openmodal" data-id="@Model.BookId" data-url="@Url.Action("ReturnBook")" id="rentButton">返却</button>
+
+

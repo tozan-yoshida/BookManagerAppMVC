@@ -251,10 +251,38 @@ namespace BookManagerAppMVC.Controllers
             TempData["Possetion"] = "本棚";
             return RedirectToAction("RentByBooksController", "RentalHistories");
         }
-
-        private bool IsRented(int id)
+        // GET: Books/Return
+        [Authorize]
+        public async Task<IActionResult> Return()
         {
-            return true;
+            var userName = HttpContext.User.Identity!.Name!;
+            var rentBooks = _context.RentalHistory.Where(x => x.Possetion == userName).ToList();
+            ViewBag.RentDate = rentBooks[0].RentDate.ToString("yyyy/MM/dd");
+            var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            return View(book);
+
+            //// 借りている本が2冊以上ある場合(エラー)
+            //if (rentBooks.Count > 1)
+            //{
+            //    var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            //    return View(book);
+            //}
+            //// 借りている本が1冊ある場合
+            //else if (rentBooks.Count == 1)
+            //{
+            //    var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            //    return View(book);
+            //}
+            //// 借りている本がない場合
+            //else
+            //{
+            //    return View();
+            //}
+        }
+
+        public IActionResult Test()
+        {
+            return View();
         }
     }
 }
