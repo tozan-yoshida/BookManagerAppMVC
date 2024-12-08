@@ -16,7 +16,10 @@
                 @Html.DisplayNameFor(model => model.RentDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RentUser)
+                @Html.DisplayNameFor(model => model.Possetion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookId)
             </th>
             <th></th>
         </tr>
@@ -28,7 +31,10 @@
                 @Html.DisplayFor(modelItem => item.RentDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RentUser)
+                @Html.DisplayFor(modelItem => item.Possetion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RentalHistoryId">Edit</a> |

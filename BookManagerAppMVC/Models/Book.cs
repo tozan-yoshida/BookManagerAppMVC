@@ -16,12 +16,12 @@ namespace BookManagerAppMVC.Models
 
         public string? RegistUser { get; set; }
 
+        public string? Possetion { get; set; }
+
         public DateTime? UpdateDate { get; set; }
 
         public string? UpdateUser { get; set; }
 
-        //public int RentalHistoryId {get; set; }
-
-        //public ICollection<RentalHistory> RentalHistorys { get; set; }
+        public bool isRented { get; set; } = false;
     }
 }

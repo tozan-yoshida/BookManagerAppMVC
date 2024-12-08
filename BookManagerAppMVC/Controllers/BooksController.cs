@@ -35,11 +35,13 @@ namespace BookManagerAppMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                if (TempData["BookId"] != null) id = (int?)TempData["BookId"];
+                else return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.BookId == id);
+            var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
+            var rentalHistories = _context.RentalHistory.Where(x => x.BookId == id);
+            ViewBag.RentalHistories = rentalHistories;
             if (book == null)
             {
                 return NotFound();
@@ -69,11 +71,13 @@ namespace BookManagerAppMVC.Controllers
 
                 book.RegistDate = DateTime.Now;
                 book.RegistUser = userName;
+                book.Possetion = "本棚";
                 book.UpdateUser = "";
 
                 _context.Add(book);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(FindBooks));
+                TempData["Book"] = book.BookId;
+                return RedirectToAction("CreateByBooksController", "RentalHistories");
             }
             return View(book);
         }
@@ -88,6 +92,8 @@ namespace BookManagerAppMVC.Controllers
             }
 
             var book = await _context.Book.FindAsync(id);
+            
+
             if (book == null)
             {
                 return NotFound();
@@ -115,6 +121,8 @@ namespace BookManagerAppMVC.Controllers
                     string userName = HttpContext.User.Identity!.Name!;
                     book.UpdateDate = DateTime.Now;
                     book.UpdateUser = userName;
+                    // 暫定処理
+                    book.Possetion = "本棚";
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }
@@ -201,6 +209,80 @@ namespace BookManagerAppMVC.Controllers
         {
             var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == id);
             return PartialView("Delete", book);
+        }
+
+        /// <summary>
+        /// 図書を借りるときの処理
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RentBook(int id)
+        {
+            var book = await _context.Book.FindAsync(id);
+            if (!book.Possetion.Equals("本棚"))
+            {
+                return RedirectToAction(nameof(Details));
+            }
+            string rentUser = HttpContext.User.Identity!.Name!;
+            book.Possetion = rentUser;
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            TempData["BookId"] = id;
+            TempData["Possetion"] = rentUser;
+            return RedirectToAction("RentByBooksController", "RentalHistories");
+        }
+
+        /// <summary>
+        /// 図書を返却するときの処理
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ReturnBook(int id)
+        {
+            var book = await _context.Book.FindAsync(id);
+            if (book.Possetion.Equals("本棚"))
+            {
+                return RedirectToAction(nameof(Details));
+            }
+            book.Possetion = "本棚";
+            _context.Update(book);
+            await _context.SaveChangesAsync();
+            TempData["BookId"] = id;
+            TempData["Possetion"] = "本棚";
+            return RedirectToAction("RentByBooksController", "RentalHistories");
+        }
+        // GET: Books/Return
+        [Authorize]
+        public async Task<IActionResult> Return()
+        {
+            var userName = HttpContext.User.Identity!.Name!;
+            var rentBooks = _context.RentalHistory.Where(x => x.Possetion == userName).ToList();
+            ViewBag.RentDate = rentBooks[0].RentDate.ToString("yyyy/MM/dd");
+            var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            return View(book);
+
+            //// 借りている本が2冊以上ある場合(エラー)
+            //if (rentBooks.Count > 1)
+            //{
+            //    var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            //    return View(book);
+            //}
+            //// 借りている本が1冊ある場合
+            //else if (rentBooks.Count == 1)
+            //{
+            //    var book = await _context.Book.FirstOrDefaultAsync(m => m.BookId == rentBooks[0].BookId);
+            //    return View(book);
+            //}
+            //// 借りている本がない場合
+            //else
+            //{
+            //    return View();
+            //}
+        }
+
+        public IActionResult Test()
+        {
+            return View();
         }
     }
 }

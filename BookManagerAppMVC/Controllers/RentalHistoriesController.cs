@@ -46,6 +46,7 @@ namespace BookManagerAppMVC.Controllers
         // GET: RentalHistories/Create
         public IActionResult Create()
         {
+            ViewBag.BookId = new SelectList(_context.Book, "BookId", "Title");
             return View();
         }
 
@@ -54,15 +55,58 @@ namespace BookManagerAppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RentalHistoryId,RentDate,RentUser")] RentalHistory rentalHistory)
+        public async Task<IActionResult> Create([Bind("RentalHistoryId,BookId")] RentalHistory rentalHistory)
         {
+            
             if (ModelState.IsValid)
             {
+                string userName = HttpContext.User.Identity!.Name!;
+
+                rentalHistory.RentDate = DateTime.Now;
+                rentalHistory.Possetion = userName;
                 _context.Add(rentalHistory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.BookId = new SelectList(_context.Book, "BookId", "Title");
             return View(rentalHistory);
+        }
+
+        /// <summary>
+        /// 図書情報を作成したときの初期状態を登録する
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> CreateByBooksController()
+        {
+            int bookId = (int)TempData["Book"]!;
+            var rentalHistory = new RentalHistory();
+
+            rentalHistory.RentDate = DateTime.Now;
+            rentalHistory.Possetion = "本棚";
+            rentalHistory.BookId = bookId;
+            _context.Add(rentalHistory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("FindBooks","Books");
+        }
+
+        /// <summary>
+        /// 図書を借りるときの情報を登録する処理
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> RentByBooksController()
+        {
+            int bookId = (int)TempData["BookId"]!;
+            string userName = (string)TempData["Possetion"]!;
+            var rentalHistory = new RentalHistory();
+
+            rentalHistory.RentDate = DateTime.Now;
+            rentalHistory.Possetion = userName;
+            rentalHistory.BookId = bookId;
+            _context.Add(rentalHistory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Books");
+
         }
 
         // GET: RentalHistories/Edit/5
